@@ -1,0 +1,414 @@
+[
+  {
+    "id": "rfq-2611-014",
+    "rfq_number": "RFQ-2611-014",
+    "customer_name": "Company B (two-wheelers)",
+    "customer_tier": "Tier-1 OEM",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Rear wheel spindle",
+    "drawing_number": "DWG-RWS-8842-REV-C",
+    "material_grade": "EN8",
+    "gross_weight_kg": 0.61,
+    "net_weight_kg": 0.48,
+    "scrap_weight_kg": 0.13,
+    "annual_volume": 180000,
+    "target_price_inr": 85.0,
+    "status": "estimating",
+    "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-10-25",
+    "due_date": "2026-11-05",
+    "currency": "INR",
+    "gst_rate_percent": 18.0,
+    "volume_tiers": [
+      { "volume": 60000, "batch_size": 5000, "label": "Batch Low (60k/yr)" },
+      { "volume": 120000, "batch_size": 10000, "label": "Batch Mid (120k/yr)" },
+      { "volume": 180000, "batch_size": 15000, "label": "Batch Contract (180k/yr)" }
+    ],
+    "routing_steps": [
+      {
+        "step_no": 10,
+        "operation_name": "Sawing & Bar Facing",
+        "machine_code": "SAW-BAND-01",
+        "cycle_time_minutes": 0.8,
+        "setup_time_minutes": 20,
+        "machine_hour_rate_inr": 450.0
+      },
+      {
+        "step_no": 20,
+        "operation_name": "CNC Turning & Step OD Roughing",
+        "machine_code": "CNC-TURN-01",
+        "cycle_time_minutes": 3.2,
+        "setup_time_minutes": 45,
+        "machine_hour_rate_inr": 850.0
+      },
+      {
+        "step_no": 30,
+        "operation_name": "Induction Hardening Journal Bearing",
+        "machine_code": "HEAT-INDUCT-01",
+        "cycle_time_minutes": 0.6,
+        "setup_time_minutes": 30,
+        "machine_hour_rate_inr": 720.0
+      },
+      {
+        "step_no": 40,
+        "operation_name": "CNC Cylindrical Finish Grinding",
+        "machine_code": "CYL-GRIND-01",
+        "cycle_time_minutes": 1.1,
+        "setup_time_minutes": 40,
+        "machine_hour_rate_inr": 650.0
+      }
+    ],
+    "ai_extraction_provenance": {
+      "extracted_from": "Email inquiry + Drawing DWG-RWS-8842-REV-C Title Block",
+      "confidence_score": 0.94,
+      "flagged_uncertainties": [
+        "Material heat treat depth specified as 'case hardened ~0.8mm' - matched to Induction line #HEAT-INDUCT-01"
+      ],
+      "historical_match": "Cloned routing from 2025 Rear Axle Pin (RFQ-2508-089)"
+    }
+  },
+  {
+    "id": "rfq-2611-019",
+    "rfq_number": "RFQ-2611-019",
+    "customer_name": "Company C (tractors)",
+    "customer_tier": "Agri Equipment OEM",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Hydraulic lift arm",
+    "drawing_number": "DWG-HLA-4040-REV-B",
+    "material_grade": "40Cr4 forging",
+    "gross_weight_kg": 4.60,
+    "net_weight_kg": 3.85,
+    "scrap_weight_kg": 0.75,
+    "annual_volume": 24000,
+    "target_price_inr": 620.0,
+    "status": "pending_approval",
+    "assigned_estimator": "Amit Kulkarni (Forging SME)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-10-28",
+    "due_date": "2026-11-08",
+    "currency": "INR",
+    "gst_rate_percent": 18.0,
+    "volume_tiers": [
+      { "volume": 12000, "batch_size": 1000, "label": "Pilot Lot (12k/yr)" },
+      { "volume": 24000, "batch_size": 2000, "label": "Full Production (24k/yr)" },
+      { "volume": 40000, "batch_size": 3500, "label": "Capacity Surge (40k/yr)" }
+    ],
+    "routing_steps": [
+      {
+        "step_no": 10,
+        "operation_name": "Billet Bending & Induction Heating",
+        "machine_code": "HEAT-BILLET-01",
+        "cycle_time_minutes": 2.5,
+        "setup_time_minutes": 60,
+        "machine_hour_rate_inr": 800.0
+      },
+      {
+        "step_no": 20,
+        "operation_name": "Closed Die Forging 1600T Press",
+        "machine_code": "FORGE-PRESS-1600T",
+        "cycle_time_minutes": 11.5,
+        "setup_time_minutes": 90,
+        "machine_hour_rate_inr": 1450.0
+      },
+      {
+        "step_no": 30,
+        "operation_name": "Trimming Flash & Shot Blasting",
+        "machine_code": "TRIM-SHOT-01",
+        "cycle_time_minutes": 1.8,
+        "setup_time_minutes": 30,
+        "machine_hour_rate_inr": 550.0
+      },
+      {
+        "step_no": 40,
+        "operation_name": "VMC Twin-Bore Machining",
+        "machine_code": "VMC-4AX-02",
+        "cycle_time_minutes": 6.2,
+        "setup_time_minutes": 45,
+        "machine_hour_rate_inr": 950.0
+      }
+    ],
+    "ai_extraction_provenance": {
+      "extracted_from": "Customer Purchase Order RFP Package (Excel Partlist + CAD PDF)",
+      "confidence_score": 0.88,
+      "flagged_uncertainties": [
+        "Annual Contract Value > ₹25 Lakh (Calculated: ~₹2.79 Crore). Sales Head approval mandatory."
+      ],
+      "historical_match": "Cloned routing from 2024 Lift Arm Lower (RFQ-2410-044)"
+    }
+  },
+  {
+    "id": "rfq-2611-023",
+    "rfq_number": "RFQ-2611-023",
+    "customer_name": "Company D (drivetrains)",
+    "customer_tier": "Commercial Vehicle Tier-1",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Gear blank",
+    "drawing_number": "DWG-GB-202-REV-E",
+    "material_grade": "20MnCr5",
+    "gross_weight_kg": 1.48,
+    "net_weight_kg": 1.15,
+    "scrap_weight_kg": 0.33,
+    "annual_volume": 60000,
+    "target_price_inr": 175.0,
+    "status": "won",
+    "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-10-15",
+    "due_date": "2026-10-28",
+    "currency": "INR",
+    "gst_rate_percent": 18.0,
+    "volume_tiers": [
+      { "volume": 20000, "batch_size": 2000, "label": "Low Volume (20k/yr)" },
+      { "volume": 40000, "batch_size": 4000, "label": "Mid Volume (40k/yr)" },
+      { "volume": 60000, "batch_size": 6000, "label": "Contract Commitment (60k/yr)" }
+    ],
+    "routing_steps": [
+      {
+        "step_no": 10,
+        "operation_name": "Sawing & Facing",
+        "machine_code": "SAW-BAND-01",
+        "cycle_time_minutes": 1.1,
+        "setup_time_minutes": 25,
+        "machine_hour_rate_inr": 450.0
+      },
+      {
+        "step_no": 20,
+        "operation_name": "CNC Turning Face & Bore Finish",
+        "machine_code": "CNC-TURN-01",
+        "cycle_time_minutes": 4.8,
+        "setup_time_minutes": 35,
+        "machine_hour_rate_inr": 850.0
+      },
+      {
+        "step_no": 30,
+        "operation_name": "VMC Keyway Broaching & Drilling",
+        "machine_code": "VMC-4AX-02",
+        "cycle_time_minutes": 2.4,
+        "setup_time_minutes": 30,
+        "machine_hour_rate_inr": 950.0
+      }
+    ],
+    "ai_extraction_provenance": {
+      "extracted_from": "Customer Drawing PDF Title Block (OCR scan)",
+      "confidence_score": 0.96,
+      "flagged_uncertainties": [],
+      "historical_match": "Cloned routing from 2025 Differential Pinion Blank (RFQ-2503-018)"
+    }
+  },
+  {
+    "id": "rfq-2610-008",
+    "rfq_number": "RFQ-2610-008",
+    "customer_name": "Company B (two-wheelers)",
+    "customer_tier": "Tier-1 OEM",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Counter Shaft (5-Speed Transmission)",
+    "drawing_number": "DWG-CS-5100-REV-A",
+    "material_grade": "20MnCr5",
+    "gross_weight_kg": 1.25,
+    "net_weight_kg": 0.98,
+    "scrap_weight_kg": 0.27,
+    "annual_volume": 90000,
+    "target_price_inr": 210.0,
+    "status": "lost",
+    "lost_reason": "Competitor quoted 8% lower on CNC cycle time (claimed 2.9 min vs our 3.6 min estimate). Customer opted for supplier with twin-spindle CNC.",
+    "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-10-02",
+    "due_date": "2026-10-12",
+    "currency": "INR",
+    "gst_rate_percent": 18.0,
+    "volume_tiers": [
+      { "volume": 30000, "batch_size": 2500, "label": "Tier 1 (30k/yr)" },
+      { "volume": 60000, "batch_size": 5000, "label": "Tier 2 (60k/yr)" },
+      { "volume": 90000, "batch_size": 7500, "label": "Tier 3 (90k/yr)" }
+    ],
+    "routing_steps": [
+      {
+        "step_no": 10,
+        "operation_name": "CNC Rough Turning",
+        "machine_code": "CNC-TURN-01",
+        "cycle_time_minutes": 3.6,
+        "setup_time_minutes": 45,
+        "machine_hour_rate_inr": 850.0
+      },
+      {
+        "step_no": 20,
+        "operation_name": "Spline Hobbing",
+        "machine_code": "HOB-SPLINE-01",
+        "cycle_time_minutes": 2.2,
+        "setup_time_minutes": 50,
+        "machine_hour_rate_inr": 920.0
+      }
+    ]
+  },
+  {
+    "id": "rfq-2610-012",
+    "rfq_number": "RFQ-2610-012",
+    "customer_name": "Company C (tractors)",
+    "customer_tier": "Agri Equipment OEM",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Splined PTO Shaft",
+    "drawing_number": "DWG-PTO-901-REV-D",
+    "material_grade": "40Cr4 forging",
+    "gross_weight_kg": 3.20,
+    "net_weight_kg": 2.65,
+    "scrap_weight_kg": 0.55,
+    "annual_volume": 30000,
+    "target_price_inr": 480.0,
+    "status": "won",
+    "assigned_estimator": "Amit Kulkarni (Forging SME)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-10-05",
+    "due_date": "2026-10-18",
+    "currency": "INR",
+    "gst_rate_percent": 18.0,
+    "volume_tiers": [
+      { "volume": 15000, "batch_size": 1500, "label": "Volume 15k" },
+      { "volume": 30000, "batch_size": 3000, "label": "Volume 30k" }
+    ],
+    "routing_steps": [
+      {
+        "step_no": 10,
+        "operation_name": "Closed Die Forging 1600T Press",
+        "machine_code": "FORGE-PRESS-1600T",
+        "cycle_time_minutes": 7.5,
+        "setup_time_minutes": 80,
+        "machine_hour_rate_inr": 1450.0
+      },
+      {
+        "step_no": 20,
+        "operation_name": "CNC Turning & Splining",
+        "machine_code": "CNC-TURN-01",
+        "cycle_time_minutes": 4.1,
+        "setup_time_minutes": 40,
+        "machine_hour_rate_inr": 850.0
+      }
+    ]
+  },
+  {
+    "id": "rfq-2611-002",
+    "rfq_number": "RFQ-2611-002",
+    "customer_name": "Company B (two-wheelers)",
+    "customer_tier": "Tier-1 OEM",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Camshaft Sprocket Blank",
+    "drawing_number": "DWG-CSP-330-REV-A",
+    "material_grade": "C45",
+    "gross_weight_kg": 0.85,
+    "net_weight_kg": 0.62,
+    "scrap_weight_kg": 0.23,
+    "annual_volume": 150000,
+    "target_price_inr": 72.0,
+    "status": "sent",
+    "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-10-22",
+    "due_date": "2026-11-03",
+    "currency": "INR",
+    "gst_rate_percent": 18.0,
+    "volume_tiers": [
+      { "volume": 75000, "batch_size": 7500, "label": "Half Year (75k)" },
+      { "volume": 150000, "batch_size": 15000, "label": "Full Year (150k)" }
+    ],
+    "routing_steps": [
+      {
+        "step_no": 10,
+        "operation_name": "CNC Turning & Grooving",
+        "machine_code": "CNC-TURN-01",
+        "cycle_time_minutes": 2.2,
+        "setup_time_minutes": 30,
+        "machine_hour_rate_inr": 850.0
+      },
+      {
+        "step_no": 20,
+        "operation_name": "VMC Pitch Circle Hole Drilling",
+        "machine_code": "VMC-4AX-02",
+        "cycle_time_minutes": 1.4,
+        "setup_time_minutes": 25,
+        "machine_hour_rate_inr": 950.0
+      }
+    ]
+  },
+  {
+    "id": "rfq-2610-015",
+    "rfq_number": "RFQ-2610-015",
+    "customer_name": "Company D (drivetrains)",
+    "customer_tier": "Commercial Vehicle Tier-1",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Drive Flange Yoke",
+    "drawing_number": "DWG-DFY-702-REV-B",
+    "material_grade": "40Cr4 forging",
+    "gross_weight_kg": 2.80,
+    "net_weight_kg": 2.15,
+    "scrap_weight_kg": 0.65,
+    "annual_volume": 45000,
+    "target_price_inr": 340.0,
+    "status": "lost",
+    "lost_reason": "Lead time mismatch: Customer requested sample production in 2.5 weeks; our die manufacturing lead time was 5 weeks.",
+    "assigned_estimator": "Amit Kulkarni (Forging SME)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-10-10",
+    "due_date": "2026-10-20",
+    "currency": "INR",
+    "gst_rate_percent": 18.0,
+    "volume_tiers": [
+      { "volume": 22500, "batch_size": 2000, "label": "Batch Low" },
+      { "volume": 45000, "batch_size": 4500, "label": "Batch High" }
+    ],
+    "routing_steps": [
+      {
+        "step_no": 10,
+        "operation_name": "Forging Press 1600T",
+        "machine_code": "FORGE-PRESS-1600T",
+        "cycle_time_minutes": 5.8,
+        "setup_time_minutes": 70,
+        "machine_hour_rate_inr": 1450.0
+      }
+    ]
+  },
+  {
+    "id": "rfq-2611-028",
+    "rfq_number": "RFQ-2611-028",
+    "customer_name": "Company C (tractors)",
+    "customer_tier": "Agri Equipment OEM",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Bull Pinion Gear Shaft",
+    "drawing_number": "DWG-BPG-441-REV-C",
+    "material_grade": "20MnCr5",
+    "gross_weight_kg": 3.75,
+    "net_weight_kg": 3.10,
+    "scrap_weight_kg": 0.65,
+    "annual_volume": 18000,
+    "target_price_inr": 540.0,
+    "status": "estimating",
+    "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-10-29",
+    "due_date": "2026-11-09",
+    "currency": "INR",
+    "gst_rate_percent": 18.0,
+    "volume_tiers": [
+      { "volume": 9000, "batch_size": 1000, "label": "Tier 1 (9k)" },
+      { "volume": 18000, "batch_size": 2000, "label": "Tier 2 (18k)" }
+    ],
+    "routing_steps": [
+      {
+        "step_no": 10,
+        "operation_name": "CNC Turning OD & Face",
+        "machine_code": "CNC-TURN-01",
+        "cycle_time_minutes": 5.4,
+        "setup_time_minutes": 45,
+        "machine_hour_rate_inr": 850.0
+      },
+      {
+        "step_no": 20,
+        "operation_name": "Gear Hobbing 14 Teeth",
+        "machine_code": "HOB-SPLINE-01",
+        "cycle_time_minutes": 4.5,
+        "setup_time_minutes": 60,
+        "machine_hour_rate_inr": 920.0
+      }
+    ]
+  }
+]

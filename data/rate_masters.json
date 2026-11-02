@@ -1,0 +1,140 @@
+{
+  "material_rates": [
+    {
+      "id": "mat-en8-v1",
+      "material_grade": "EN8",
+      "material_type": "Carbon Steel Bar Stock",
+      "density_kg_dm3": 7.85,
+      "base_rate_per_kg": 72.0,
+      "effective_from": "2025-04-01",
+      "effective_to": "2026-03-31",
+      "version": "v1.0"
+    },
+    {
+      "id": "mat-en8-v2",
+      "material_grade": "EN8",
+      "material_type": "Carbon Steel Bar Stock",
+      "density_kg_dm3": 7.85,
+      "base_rate_per_kg": 76.5,
+      "effective_from": "2026-04-01",
+      "effective_to": null,
+      "version": "v2.0"
+    },
+    {
+      "id": "mat-40cr4-v1",
+      "material_grade": "40Cr4 forging",
+      "material_type": "Alloy Steel Forging",
+      "density_kg_dm3": 7.85,
+      "base_rate_per_kg": 98.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    },
+    {
+      "id": "mat-20mncr5-v1",
+      "material_grade": "20MnCr5",
+      "material_type": "Case Hardening Alloy Steel",
+      "density_kg_dm3": 7.85,
+      "base_rate_per_kg": 110.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    },
+    {
+      "id": "mat-c45-v1",
+      "material_grade": "C45",
+      "material_type": "Medium Carbon Steel",
+      "density_kg_dm3": 7.85,
+      "base_rate_per_kg": 68.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    },
+    {
+      "id": "mat-ss304-v1",
+      "material_grade": "SS304",
+      "material_type": "Austenitic Stainless Steel",
+      "density_kg_dm3": 8.0,
+      "base_rate_per_kg": 240.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    }
+  ],
+  "machine_hour_rates": [
+    {
+      "id": "mhr-cnc-lathe-v1",
+      "machine_code": "CNC-TURN-01",
+      "machine_name": "2-Axis CNC Turning Center (Doosan/Ace Micromatic)",
+      "hour_rate_inr": 850.0,
+      "setup_rate_inr": 450.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    },
+    {
+      "id": "mhr-forge-press-v1",
+      "machine_code": "FORGE-PRESS-1600T",
+      "machine_name": "1600T Closed Die Forging Press",
+      "hour_rate_inr": 1450.0,
+      "setup_rate_inr": 800.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    },
+    {
+      "id": "mhr-vmc-4axis-v1",
+      "machine_code": "VMC-4AX-02",
+      "machine_name": "VMC 4-Axis Machining Center (BFW/Haas)",
+      "hour_rate_inr": 950.0,
+      "setup_rate_inr": 500.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    },
+    {
+      "id": "mhr-cyl-grinder-v1",
+      "machine_code": "CYL-GRIND-01",
+      "machine_name": "CNC Cylindrical Grinding Machine",
+      "hour_rate_inr": 650.0,
+      "setup_rate_inr": 400.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    },
+    {
+      "id": "mhr-induction-v1",
+      "machine_code": "HEAT-INDUCT-01",
+      "machine_name": "Induction Hardening & Quench Line",
+      "hour_rate_inr": 720.0,
+      "setup_rate_inr": 350.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "version": "v1.0"
+    }
+  ],
+  "scrap_recovery_rates": [
+    {
+      "id": "scrap-steel-turnings-v1",
+      "material_category": "Carbon/Alloy Steel Swarf/Turnings",
+      "credit_rate_per_kg": 32.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null
+    },
+    {
+      "id": "scrap-forging-flash-v1",
+      "material_category": "Forging Flash / Heavy Offcuts",
+      "credit_rate_per_kg": 38.0,
+      "effective_from": "2026-01-01",
+      "effective_to": null
+    }
+  ],
+  "standard_overheads": {
+    "factory_overhead_percent": 12.0,
+    "quality_inspection_percent": 3.0,
+    "standard_profit_margin_percent": 15.0,
+    "packaging_per_piece_inr": 4.5,
+    "freight_per_piece_inr": 3.0,
+    "gst_percent": 18.0
+  }
+}
