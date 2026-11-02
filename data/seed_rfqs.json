@@ -1,5 +1,61 @@
 [
   {
+    "id": "rfq-mvz5qf8j",
+    "rfq_number": "RFQ-26-116",
+    "customer_name": "alert(XSS)Company B",
+    "customer_tier": "Tier-1 OEM",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Legitimately Updated Part Name",
+    "drawing_number": "DWG-9999",
+    "material_grade": "EN8",
+    "gross_weight_kg": 1,
+    "net_weight_kg": 0.8,
+    "scrap_weight_kg": 0.19999999999999996,
+    "annual_volume": 50000,
+    "status": "estimating",
+    "assigned_estimator": "Rajesh",
+    "assigned_sales_head": "Vikram",
+    "created_date": "2026-11-02",
+    "due_date": "2026-11-10",
+    "currency": "INR",
+    "gst_rate_percent": 18,
+    "margin_pct": 15,
+    "factory_overhead_pct": 12,
+    "quality_inspection_pct": 3,
+    "packaging_inr": 4.5,
+    "freight_inr": 3,
+    "volume_tiers": [],
+    "routing_steps": []
+  },
+  {
+    "id": "rfq-mvz5qf8i",
+    "rfq_number": "RFQ-26-429",
+    "customer_name": "Hacker Corp",
+    "customer_tier": "Tier-1 OEM",
+    "plant_location": "Chakan, Pune",
+    "part_name": "Injected Part",
+    "drawing_number": "DWG-7649-REV-A",
+    "material_grade": "EN8",
+    "gross_weight_kg": 1,
+    "net_weight_kg": 0.8,
+    "scrap_weight_kg": 0.19999999999999996,
+    "annual_volume": 50000,
+    "status": "estimating",
+    "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
+    "assigned_sales_head": "Vikram Malhotra (VP Sales)",
+    "created_date": "2026-11-02",
+    "due_date": "2026-11-09",
+    "currency": "INR",
+    "gst_rate_percent": 18,
+    "margin_pct": 15,
+    "factory_overhead_pct": 12,
+    "quality_inspection_pct": 3,
+    "packaging_inr": 4.5,
+    "freight_inr": 3,
+    "volume_tiers": [],
+    "routing_steps": []
+  },
+  {
     "id": "rfq-2611-014",
     "rfq_number": "RFQ-2611-014",
     "customer_name": "Company B (two-wheelers)",
@@ -12,18 +68,30 @@
     "net_weight_kg": 0.48,
     "scrap_weight_kg": 0.13,
     "annual_volume": 180000,
-    "target_price_inr": 85.0,
+    "target_price_inr": 85,
     "status": "estimating",
     "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
     "assigned_sales_head": "Vikram Malhotra (VP Sales)",
     "created_date": "2026-10-25",
     "due_date": "2026-11-05",
     "currency": "INR",
-    "gst_rate_percent": 18.0,
+    "gst_rate_percent": 18,
     "volume_tiers": [
-      { "volume": 60000, "batch_size": 5000, "label": "Batch Low (60k/yr)" },
-      { "volume": 120000, "batch_size": 10000, "label": "Batch Mid (120k/yr)" },
-      { "volume": 180000, "batch_size": 15000, "label": "Batch Contract (180k/yr)" }
+      {
+        "volume": 60000,
+        "batch_size": 5000,
+        "label": "Batch Low (60k/yr)"
+      },
+      {
+        "volume": 120000,
+        "batch_size": 10000,
+        "label": "Batch Mid (120k/yr)"
+      },
+      {
+        "volume": 180000,
+        "batch_size": 15000,
+        "label": "Batch Contract (180k/yr)"
+      }
     ],
     "routing_steps": [
       {
@@ -32,7 +100,7 @@
         "machine_code": "SAW-BAND-01",
         "cycle_time_minutes": 0.8,
         "setup_time_minutes": 20,
-        "machine_hour_rate_inr": 450.0
+        "machine_hour_rate_inr": 450
       },
       {
         "step_no": 20,
@@ -40,7 +108,7 @@
         "machine_code": "CNC-TURN-01",
         "cycle_time_minutes": 3.2,
         "setup_time_minutes": 45,
-        "machine_hour_rate_inr": 850.0
+        "machine_hour_rate_inr": 850
       },
       {
         "step_no": 30,
@@ -48,7 +116,7 @@
         "machine_code": "HEAT-INDUCT-01",
         "cycle_time_minutes": 0.6,
         "setup_time_minutes": 30,
-        "machine_hour_rate_inr": 720.0
+        "machine_hour_rate_inr": 720
       },
       {
         "step_no": 40,
@@ -56,7 +124,7 @@
         "machine_code": "CYL-GRIND-01",
         "cycle_time_minutes": 1.1,
         "setup_time_minutes": 40,
-        "machine_hour_rate_inr": 650.0
+        "machine_hour_rate_inr": 650
       }
     ],
     "ai_extraction_provenance": {
@@ -65,8 +133,11 @@
       "flagged_uncertainties": [
         "Material heat treat depth specified as 'case hardened ~0.8mm' - matched to Induction line #HEAT-INDUCT-01"
       ],
-      "historical_match": "Cloned routing from 2025 Rear Axle Pin (RFQ-2508-089)"
-    }
+      "historical_match": "Cloned routing from 2025 Rear Axle Pin (RFQ-2508-089)",
+      "accepted_by_estimator": true
+    },
+    "margin_pct": 15,
+    "factory_overhead_pct": 12
   },
   {
     "id": "rfq-2611-019",
@@ -77,22 +148,34 @@
     "part_name": "Hydraulic lift arm",
     "drawing_number": "DWG-HLA-4040-REV-B",
     "material_grade": "40Cr4 forging",
-    "gross_weight_kg": 4.60,
+    "gross_weight_kg": 4.6,
     "net_weight_kg": 3.85,
     "scrap_weight_kg": 0.75,
     "annual_volume": 24000,
-    "target_price_inr": 620.0,
-    "status": "pending_approval",
+    "target_price_inr": 620,
+    "status": "approved",
     "assigned_estimator": "Amit Kulkarni (Forging SME)",
     "assigned_sales_head": "Vikram Malhotra (VP Sales)",
     "created_date": "2026-10-28",
     "due_date": "2026-11-08",
     "currency": "INR",
-    "gst_rate_percent": 18.0,
+    "gst_rate_percent": 18,
     "volume_tiers": [
-      { "volume": 12000, "batch_size": 1000, "label": "Pilot Lot (12k/yr)" },
-      { "volume": 24000, "batch_size": 2000, "label": "Full Production (24k/yr)" },
-      { "volume": 40000, "batch_size": 3500, "label": "Capacity Surge (40k/yr)" }
+      {
+        "volume": 12000,
+        "batch_size": 1000,
+        "label": "Pilot Lot (12k/yr)"
+      },
+      {
+        "volume": 24000,
+        "batch_size": 2000,
+        "label": "Full Production (24k/yr)"
+      },
+      {
+        "volume": 40000,
+        "batch_size": 3500,
+        "label": "Capacity Surge (40k/yr)"
+      }
     ],
     "routing_steps": [
       {
@@ -101,7 +184,7 @@
         "machine_code": "HEAT-BILLET-01",
         "cycle_time_minutes": 2.5,
         "setup_time_minutes": 60,
-        "machine_hour_rate_inr": 800.0
+        "machine_hour_rate_inr": 800
       },
       {
         "step_no": 20,
@@ -109,7 +192,7 @@
         "machine_code": "FORGE-PRESS-1600T",
         "cycle_time_minutes": 11.5,
         "setup_time_minutes": 90,
-        "machine_hour_rate_inr": 1450.0
+        "machine_hour_rate_inr": 1450
       },
       {
         "step_no": 30,
@@ -117,7 +200,7 @@
         "machine_code": "TRIM-SHOT-01",
         "cycle_time_minutes": 1.8,
         "setup_time_minutes": 30,
-        "machine_hour_rate_inr": 550.0
+        "machine_hour_rate_inr": 550
       },
       {
         "step_no": 40,
@@ -125,7 +208,7 @@
         "machine_code": "VMC-4AX-02",
         "cycle_time_minutes": 6.2,
         "setup_time_minutes": 45,
-        "machine_hour_rate_inr": 950.0
+        "machine_hour_rate_inr": 950
       }
     ],
     "ai_extraction_provenance": {
@@ -135,7 +218,9 @@
         "Annual Contract Value > ₹25 Lakh (Calculated: ~₹2.79 Crore). Sales Head approval mandatory."
       ],
       "historical_match": "Cloned routing from 2024 Lift Arm Lower (RFQ-2410-044)"
-    }
+    },
+    "approved_at": "2026-11-02T111243.571Z",
+    "approved_by": "Vikram Malhotra (VP Sales)"
   },
   {
     "id": "rfq-2611-023",
@@ -150,18 +235,30 @@
     "net_weight_kg": 1.15,
     "scrap_weight_kg": 0.33,
     "annual_volume": 60000,
-    "target_price_inr": 175.0,
+    "target_price_inr": 175,
     "status": "won",
     "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
     "assigned_sales_head": "Vikram Malhotra (VP Sales)",
     "created_date": "2026-10-15",
     "due_date": "2026-10-28",
     "currency": "INR",
-    "gst_rate_percent": 18.0,
+    "gst_rate_percent": 18,
     "volume_tiers": [
-      { "volume": 20000, "batch_size": 2000, "label": "Low Volume (20k/yr)" },
-      { "volume": 40000, "batch_size": 4000, "label": "Mid Volume (40k/yr)" },
-      { "volume": 60000, "batch_size": 6000, "label": "Contract Commitment (60k/yr)" }
+      {
+        "volume": 20000,
+        "batch_size": 2000,
+        "label": "Low Volume (20k/yr)"
+      },
+      {
+        "volume": 40000,
+        "batch_size": 4000,
+        "label": "Mid Volume (40k/yr)"
+      },
+      {
+        "volume": 60000,
+        "batch_size": 6000,
+        "label": "Contract Commitment (60k/yr)"
+      }
     ],
     "routing_steps": [
       {
@@ -170,7 +267,7 @@
         "machine_code": "SAW-BAND-01",
         "cycle_time_minutes": 1.1,
         "setup_time_minutes": 25,
-        "machine_hour_rate_inr": 450.0
+        "machine_hour_rate_inr": 450
       },
       {
         "step_no": 20,
@@ -178,7 +275,7 @@
         "machine_code": "CNC-TURN-01",
         "cycle_time_minutes": 4.8,
         "setup_time_minutes": 35,
-        "machine_hour_rate_inr": 850.0
+        "machine_hour_rate_inr": 850
       },
       {
         "step_no": 30,
@@ -186,7 +283,7 @@
         "machine_code": "VMC-4AX-02",
         "cycle_time_minutes": 2.4,
         "setup_time_minutes": 30,
-        "machine_hour_rate_inr": 950.0
+        "machine_hour_rate_inr": 950
       }
     ],
     "ai_extraction_provenance": {
@@ -209,7 +306,7 @@
     "net_weight_kg": 0.98,
     "scrap_weight_kg": 0.27,
     "annual_volume": 90000,
-    "target_price_inr": 210.0,
+    "target_price_inr": 210,
     "status": "lost",
     "lost_reason": "Competitor quoted 8% lower on CNC cycle time (claimed 2.9 min vs our 3.6 min estimate). Customer opted for supplier with twin-spindle CNC.",
     "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
@@ -217,11 +314,23 @@
     "created_date": "2026-10-02",
     "due_date": "2026-10-12",
     "currency": "INR",
-    "gst_rate_percent": 18.0,
+    "gst_rate_percent": 18,
     "volume_tiers": [
-      { "volume": 30000, "batch_size": 2500, "label": "Tier 1 (30k/yr)" },
-      { "volume": 60000, "batch_size": 5000, "label": "Tier 2 (60k/yr)" },
-      { "volume": 90000, "batch_size": 7500, "label": "Tier 3 (90k/yr)" }
+      {
+        "volume": 30000,
+        "batch_size": 2500,
+        "label": "Tier 1 (30k/yr)"
+      },
+      {
+        "volume": 60000,
+        "batch_size": 5000,
+        "label": "Tier 2 (60k/yr)"
+      },
+      {
+        "volume": 90000,
+        "batch_size": 7500,
+        "label": "Tier 3 (90k/yr)"
+      }
     ],
     "routing_steps": [
       {
@@ -230,7 +339,7 @@
         "machine_code": "CNC-TURN-01",
         "cycle_time_minutes": 3.6,
         "setup_time_minutes": 45,
-        "machine_hour_rate_inr": 850.0
+        "machine_hour_rate_inr": 850
       },
       {
         "step_no": 20,
@@ -238,7 +347,7 @@
         "machine_code": "HOB-SPLINE-01",
         "cycle_time_minutes": 2.2,
         "setup_time_minutes": 50,
-        "machine_hour_rate_inr": 920.0
+        "machine_hour_rate_inr": 920
       }
     ]
   },
@@ -251,21 +360,29 @@
     "part_name": "Splined PTO Shaft",
     "drawing_number": "DWG-PTO-901-REV-D",
     "material_grade": "40Cr4 forging",
-    "gross_weight_kg": 3.20,
+    "gross_weight_kg": 3.2,
     "net_weight_kg": 2.65,
     "scrap_weight_kg": 0.55,
     "annual_volume": 30000,
-    "target_price_inr": 480.0,
+    "target_price_inr": 480,
     "status": "won",
     "assigned_estimator": "Amit Kulkarni (Forging SME)",
     "assigned_sales_head": "Vikram Malhotra (VP Sales)",
     "created_date": "2026-10-05",
     "due_date": "2026-10-18",
     "currency": "INR",
-    "gst_rate_percent": 18.0,
+    "gst_rate_percent": 18,
     "volume_tiers": [
-      { "volume": 15000, "batch_size": 1500, "label": "Volume 15k" },
-      { "volume": 30000, "batch_size": 3000, "label": "Volume 30k" }
+      {
+        "volume": 15000,
+        "batch_size": 1500,
+        "label": "Volume 15k"
+      },
+      {
+        "volume": 30000,
+        "batch_size": 3000,
+        "label": "Volume 30k"
+      }
     ],
     "routing_steps": [
       {
@@ -274,7 +391,7 @@
         "machine_code": "FORGE-PRESS-1600T",
         "cycle_time_minutes": 7.5,
         "setup_time_minutes": 80,
-        "machine_hour_rate_inr": 1450.0
+        "machine_hour_rate_inr": 1450
       },
       {
         "step_no": 20,
@@ -282,7 +399,7 @@
         "machine_code": "CNC-TURN-01",
         "cycle_time_minutes": 4.1,
         "setup_time_minutes": 40,
-        "machine_hour_rate_inr": 850.0
+        "machine_hour_rate_inr": 850
       }
     ]
   },
@@ -299,17 +416,25 @@
     "net_weight_kg": 0.62,
     "scrap_weight_kg": 0.23,
     "annual_volume": 150000,
-    "target_price_inr": 72.0,
+    "target_price_inr": 72,
     "status": "sent",
     "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
     "assigned_sales_head": "Vikram Malhotra (VP Sales)",
     "created_date": "2026-10-22",
     "due_date": "2026-11-03",
     "currency": "INR",
-    "gst_rate_percent": 18.0,
+    "gst_rate_percent": 18,
     "volume_tiers": [
-      { "volume": 75000, "batch_size": 7500, "label": "Half Year (75k)" },
-      { "volume": 150000, "batch_size": 15000, "label": "Full Year (150k)" }
+      {
+        "volume": 75000,
+        "batch_size": 7500,
+        "label": "Half Year (75k)"
+      },
+      {
+        "volume": 150000,
+        "batch_size": 15000,
+        "label": "Full Year (150k)"
+      }
     ],
     "routing_steps": [
       {
@@ -318,7 +443,7 @@
         "machine_code": "CNC-TURN-01",
         "cycle_time_minutes": 2.2,
         "setup_time_minutes": 30,
-        "machine_hour_rate_inr": 850.0
+        "machine_hour_rate_inr": 850
       },
       {
         "step_no": 20,
@@ -326,7 +451,7 @@
         "machine_code": "VMC-4AX-02",
         "cycle_time_minutes": 1.4,
         "setup_time_minutes": 25,
-        "machine_hour_rate_inr": 950.0
+        "machine_hour_rate_inr": 950
       }
     ]
   },
@@ -339,11 +464,11 @@
     "part_name": "Drive Flange Yoke",
     "drawing_number": "DWG-DFY-702-REV-B",
     "material_grade": "40Cr4 forging",
-    "gross_weight_kg": 2.80,
+    "gross_weight_kg": 2.8,
     "net_weight_kg": 2.15,
     "scrap_weight_kg": 0.65,
     "annual_volume": 45000,
-    "target_price_inr": 340.0,
+    "target_price_inr": 340,
     "status": "lost",
     "lost_reason": "Lead time mismatch: Customer requested sample production in 2.5 weeks; our die manufacturing lead time was 5 weeks.",
     "assigned_estimator": "Amit Kulkarni (Forging SME)",
@@ -351,10 +476,18 @@
     "created_date": "2026-10-10",
     "due_date": "2026-10-20",
     "currency": "INR",
-    "gst_rate_percent": 18.0,
+    "gst_rate_percent": 18,
     "volume_tiers": [
-      { "volume": 22500, "batch_size": 2000, "label": "Batch Low" },
-      { "volume": 45000, "batch_size": 4500, "label": "Batch High" }
+      {
+        "volume": 22500,
+        "batch_size": 2000,
+        "label": "Batch Low"
+      },
+      {
+        "volume": 45000,
+        "batch_size": 4500,
+        "label": "Batch High"
+      }
     ],
     "routing_steps": [
       {
@@ -363,7 +496,7 @@
         "machine_code": "FORGE-PRESS-1600T",
         "cycle_time_minutes": 5.8,
         "setup_time_minutes": 70,
-        "machine_hour_rate_inr": 1450.0
+        "machine_hour_rate_inr": 1450
       }
     ]
   },
@@ -377,20 +510,28 @@
     "drawing_number": "DWG-BPG-441-REV-C",
     "material_grade": "20MnCr5",
     "gross_weight_kg": 3.75,
-    "net_weight_kg": 3.10,
+    "net_weight_kg": 3.1,
     "scrap_weight_kg": 0.65,
     "annual_volume": 18000,
-    "target_price_inr": 540.0,
+    "target_price_inr": 540,
     "status": "estimating",
     "assigned_estimator": "Rajesh Sharma (Senior Estimator)",
     "assigned_sales_head": "Vikram Malhotra (VP Sales)",
     "created_date": "2026-10-29",
     "due_date": "2026-11-09",
     "currency": "INR",
-    "gst_rate_percent": 18.0,
+    "gst_rate_percent": 18,
     "volume_tiers": [
-      { "volume": 9000, "batch_size": 1000, "label": "Tier 1 (9k)" },
-      { "volume": 18000, "batch_size": 2000, "label": "Tier 2 (18k)" }
+      {
+        "volume": 9000,
+        "batch_size": 1000,
+        "label": "Tier 1 (9k)"
+      },
+      {
+        "volume": 18000,
+        "batch_size": 2000,
+        "label": "Tier 2 (18k)"
+      }
     ],
     "routing_steps": [
       {
@@ -399,7 +540,7 @@
         "machine_code": "CNC-TURN-01",
         "cycle_time_minutes": 5.4,
         "setup_time_minutes": 45,
-        "machine_hour_rate_inr": 850.0
+        "machine_hour_rate_inr": 850
       },
       {
         "step_no": 20,
@@ -407,7 +548,7 @@
         "machine_code": "HOB-SPLINE-01",
         "cycle_time_minutes": 4.5,
         "setup_time_minutes": 60,
-        "machine_hour_rate_inr": 920.0
+        "machine_hour_rate_inr": 920
       }
     ]
   }

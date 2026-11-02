@@ -115,30 +115,56 @@ export interface RateMasterDatabase {
   };
 }
 
+// Defensive number coercion
+function safeNum(val: any, fallback: number = 0): number {
+  const n = Number(val);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+function safeStr(val: any, fallback: string = ''): string {
+  return typeof val === 'string' ? val.trim() : fallback;
+}
+
+function round2(val: number): number {
+  return Math.round((safeNum(val) + Number.EPSILON) * 100) / 100;
+}
+
+function round3(val: number): number {
+  return Math.round((safeNum(val) + Number.EPSILON) * 1000) / 1000;
+}
+
 /**
  * Deterministic Costing Engine.
  * Calculates exact production costs, multi-volume price breaks, and checks high-value approval gates.
+ * Hardened with defensive bounds against NaN, division by zero, and invalid types.
  */
 export function calculatePartCost(
   inputs: CostingInputs,
   rates: RateMasterDatabase,
   asOfDate: string = new Date().toISOString().split('T')[0]
 ): CostBreakdown {
+  const safeDate = safeStr(asOfDate) || new Date().toISOString().split('T')[0];
+  const inputGrade = safeStr(inputs.material_grade, 'EN8').toLowerCase();
+
   // 1. Resolve Material Rate as of the specified date
-  const matEntry = rates.material_rates.find(
+  const matList = Array.isArray(rates?.material_rates) ? rates.material_rates : [];
+  const matEntry = matList.find(
     (m) =>
-      m.material_grade.toLowerCase() === inputs.material_grade.toLowerCase() &&
-      m.effective_from <= asOfDate &&
-      (!m.effective_to || m.effective_to >= asOfDate)
-  ) || rates.material_rates.find(
-    (m) => m.material_grade.toLowerCase() === inputs.material_grade.toLowerCase()
+      safeStr(m.material_grade).toLowerCase() === inputGrade &&
+      m.effective_from <= safeDate &&
+      (!m.effective_to || m.effective_to >= safeDate)
+  ) || matList.find(
+    (m) => safeStr(m.material_grade).toLowerCase() === inputGrade
   );
 
-  const matRatePerKg = matEntry ? matEntry.base_rate_per_kg : 75.0; // fallback default
-  const scrapRatePerKg = rates.scrap_recovery_rates[0]?.credit_rate_per_kg || 32.0;
+  const matRatePerKg = matEntry ? safeNum(matEntry.base_rate_per_kg, 76.5) : 76.5;
+  const scrapList = Array.isArray(rates?.scrap_recovery_rates) ? rates.scrap_recovery_rates : [];
+  const scrapRatePerKg = scrapList[0]?.credit_rate_per_kg ? safeNum(scrapList[0].credit_rate_per_kg, 32.0) : 32.0;
 
-  const grossWt = Math.max(0, inputs.gross_weight_kg);
-  const netWt = Math.min(grossWt, Math.max(0, inputs.net_weight_kg));
+  const rawGross = safeNum(inputs.gross_weight_kg, 1.0);
+  const grossWt = Math.max(0, rawGross);
+  const rawNet = safeNum(inputs.net_weight_kg, grossWt * 0.8);
+  const netWt = Math.min(grossWt, Math.max(0, rawNet));
   const scrapWt = Math.max(0, grossWt - netWt);
 
   const grossMaterialCost = grossWt * matRatePerKg;
@@ -150,26 +176,37 @@ export function calculatePartCost(
   let totalSetupCost = 0;
   const operations: OperationCostDetail[] = [];
 
-  const batchSize = Math.max(1, inputs.volume_tier.batch_size || 1000);
+  const rawBatch = safeNum(inputs.volume_tier?.batch_size, 1000);
+  const batchSize = rawBatch > 0 ? Math.round(rawBatch) : 1000;
 
-  for (const step of inputs.routing_steps) {
-    const mhrEntry = rates.machine_hour_rates.find(
+  const steps = Array.isArray(inputs.routing_steps) ? inputs.routing_steps : [];
+  const mhrList = Array.isArray(rates?.machine_hour_rates) ? rates.machine_hour_rates : [];
+
+  for (const step of steps) {
+    const stepMachineCode = safeStr(step.machine_code).toLowerCase();
+    const mhrEntry = mhrList.find(
       (m) =>
-        m.machine_code.toLowerCase() === step.machine_code.toLowerCase() &&
-        m.effective_from <= asOfDate &&
-        (!m.effective_to || m.effective_to >= asOfDate)
-    ) || rates.machine_hour_rates.find(
-      (m) => m.machine_code.toLowerCase() === step.machine_code.toLowerCase()
+        safeStr(m.machine_code).toLowerCase() === stepMachineCode &&
+        m.effective_from <= safeDate &&
+        (!m.effective_to || m.effective_to >= safeDate)
+    ) || mhrList.find(
+      (m) => safeStr(m.machine_code).toLowerCase() === stepMachineCode
     );
 
-    const hourRate = step.machine_hour_rate_inr ?? (mhrEntry ? mhrEntry.hour_rate_inr : 850.0);
-    const setupRate = mhrEntry ? mhrEntry.setup_rate_inr : 450.0;
+    const hourRate = step.machine_hour_rate_inr !== undefined
+      ? safeNum(step.machine_hour_rate_inr, 850.0)
+      : (mhrEntry ? safeNum(mhrEntry.hour_rate_inr, 850.0) : 850.0);
+
+    const setupRate = mhrEntry ? safeNum(mhrEntry.setup_rate_inr, 450.0) : 450.0;
+
+    const cycleMins = Math.max(0, safeNum(step.cycle_time_minutes, 1.0));
+    const setupMins = Math.max(0, safeNum(step.setup_time_minutes, 30.0));
 
     // Direct cycle time machining cost = (cycle_time_minutes / 60) * hourRate
-    const machiningCostPerPiece = (step.cycle_time_minutes / 60) * hourRate;
+    const machiningCostPerPiece = (cycleMins / 60) * hourRate;
 
     // Setup amortization per piece = (setup_time_minutes / 60 * setupRate) / batchSize
-    const setupCostPerPiece = ((step.setup_time_minutes || 0) / 60 * setupRate) / batchSize;
+    const setupCostPerPiece = ((setupMins / 60) * setupRate) / batchSize;
 
     const opTotal = machiningCostPerPiece + setupCostPerPiece;
 
@@ -177,27 +214,49 @@ export function calculatePartCost(
     totalSetupCost += setupCostPerPiece;
 
     operations.push({
-      step_no: step.step_no,
-      operation_name: step.operation_name,
-      machine_code: step.machine_code,
-      cycle_time_minutes: step.cycle_time_minutes,
-      machine_hour_rate_inr: Math.round(hourRate * 100) / 100,
-      machining_cost_per_piece: Math.round(machiningCostPerPiece * 100) / 100,
-      setup_time_minutes: step.setup_time_minutes,
-      setup_cost_per_piece: Math.round(setupCostPerPiece * 100) / 100,
-      total_operation_cost_per_piece: Math.round(opTotal * 100) / 100,
+      step_no: safeNum(step.step_no, operations.length + 1),
+      operation_name: safeStr(step.operation_name, 'Machining Operation'),
+      machine_code: safeStr(step.machine_code, 'CNC-GENERIC'),
+      cycle_time_minutes: round2(cycleMins),
+      machine_hour_rate_inr: round2(hourRate),
+      machining_cost_per_piece: round2(machiningCostPerPiece),
+      setup_time_minutes: round2(setupMins),
+      setup_cost_per_piece: round2(setupCostPerPiece),
+      total_operation_cost_per_piece: round2(opTotal),
     });
   }
 
   const totalRoutingCost = totalMachiningCost + totalSetupCost;
 
   // 3. Overheads & Logistics
-  const factoryOverheadPct = inputs.factory_overhead_pct ?? rates.standard_overheads?.factory_overhead_percent ?? 12.0;
-  const qualityInspectionPct = inputs.quality_inspection_pct ?? rates.standard_overheads?.quality_inspection_percent ?? 3.0;
-  const marginPct = inputs.margin_pct ?? rates.standard_overheads?.standard_profit_margin_percent ?? 15.0;
-  const packagingInr = inputs.packaging_inr ?? rates.standard_overheads?.packaging_per_piece_inr ?? 4.5;
-  const freightInr = inputs.freight_inr ?? rates.standard_overheads?.freight_per_piece_inr ?? 3.0;
-  const gstPct = inputs.gst_pct ?? rates.standard_overheads?.gst_percent ?? 18.0;
+  const factoryOverheadPct = safeNum(
+    inputs.factory_overhead_pct,
+    safeNum(rates?.standard_overheads?.factory_overhead_percent, 12.0)
+  );
+  const qualityInspectionPct = safeNum(
+    inputs.quality_inspection_pct,
+    safeNum(rates?.standard_overheads?.quality_inspection_percent, 3.0)
+  );
+
+  // Profit margin clamped between 0% and 90% to avoid division by zero / negative denominator
+  const rawMargin = safeNum(
+    inputs.margin_pct,
+    safeNum(rates?.standard_overheads?.standard_profit_margin_percent, 15.0)
+  );
+  const marginPct = Math.min(90.0, Math.max(0.0, rawMargin));
+
+  const packagingInr = safeNum(
+    inputs.packaging_inr,
+    safeNum(rates?.standard_overheads?.packaging_per_piece_inr, 4.5)
+  );
+  const freightInr = safeNum(
+    inputs.freight_inr,
+    safeNum(rates?.standard_overheads?.freight_per_piece_inr, 3.0)
+  );
+  const gstPct = safeNum(
+    inputs.gst_pct,
+    safeNum(rates?.standard_overheads?.gst_percent, 18.0)
+  );
 
   const primeManufacturingCost = netMaterialCost + totalRoutingCost;
   const factoryOverheadCost = primeManufacturingCost * (factoryOverheadPct / 100);
@@ -207,54 +266,56 @@ export function calculatePartCost(
   const totalExFactoryCost = primeManufacturingCost + factoryOverheadCost + qualityInspectionCost + logisticsPackagingCost;
 
   // Unit selling price before tax = ExFactoryCost / (1 - marginPct/100)
-  const unitPriceExclGst = marginPct < 100 ? totalExFactoryCost / (1 - marginPct / 100) : totalExFactoryCost * 1.15;
+  const marginDenominator = Math.max(0.05, 1 - marginPct / 100);
+  const unitPriceExclGst = totalExFactoryCost / marginDenominator;
   const marginAmount = unitPriceExclGst - totalExFactoryCost;
 
   const gstAmount = unitPriceExclGst * (gstPct / 100);
   const finalUnitPriceInclGst = unitPriceExclGst + gstAmount;
 
   // Annual Contract Value & Gate
-  const annualContractValueExclGst = unitPriceExclGst * inputs.volume_tier.volume;
-  const annualContractValueInclGst = finalUnitPriceInclGst * inputs.volume_tier.volume;
+  const volume = Math.max(1, safeNum(inputs.volume_tier?.volume, 10000));
+  const annualContractValueExclGst = unitPriceExclGst * volume;
+  const annualContractValueInclGst = finalUnitPriceInclGst * volume;
 
   // High Value Approval Rule: Annual value > ₹25 Lakhs (₹2,500,000)
   const requiresSalesHeadApproval = annualContractValueExclGst > 2500000;
 
   return {
-    volume: inputs.volume_tier.volume,
+    volume,
     batch_size: batchSize,
-    label: inputs.volume_tier.label,
+    label: safeStr(inputs.volume_tier?.label, `${volume.toLocaleString('en-IN')} pcs/yr`),
 
-    material_grade: inputs.material_grade,
-    material_rate_per_kg: Math.round(matRatePerKg * 100) / 100,
-    gross_weight_kg: Math.round(grossWt * 1000) / 1000,
-    net_weight_kg: Math.round(netWt * 1000) / 1000,
-    scrap_weight_kg: Math.round(scrapWt * 1000) / 1000,
-    scrap_rate_per_kg: Math.round(scrapRatePerKg * 100) / 100,
-    gross_material_cost: Math.round(grossMaterialCost * 100) / 100,
-    scrap_recovery_credit: Math.round(scrapRecoveryCredit * 100) / 100,
-    net_material_cost: Math.round(netMaterialCost * 100) / 100,
+    material_grade: safeStr(inputs.material_grade, 'EN8'),
+    material_rate_per_kg: round2(matRatePerKg),
+    gross_weight_kg: round3(grossWt),
+    net_weight_kg: round3(netWt),
+    scrap_weight_kg: round3(scrapWt),
+    scrap_rate_per_kg: round2(scrapRatePerKg),
+    gross_material_cost: round2(grossMaterialCost),
+    scrap_recovery_credit: round2(scrapRecoveryCredit),
+    net_material_cost: round2(netMaterialCost),
 
     operations,
-    total_machining_cost: Math.round(totalMachiningCost * 100) / 100,
-    total_setup_cost: Math.round(totalSetupCost * 100) / 100,
-    total_routing_cost: Math.round(totalRoutingCost * 100) / 100,
+    total_machining_cost: round2(totalMachiningCost),
+    total_setup_cost: round2(totalSetupCost),
+    total_routing_cost: round2(totalRoutingCost),
 
-    prime_manufacturing_cost: Math.round(primeManufacturingCost * 100) / 100,
-    factory_overhead_cost: Math.round(factoryOverheadCost * 100) / 100,
-    quality_inspection_cost: Math.round(qualityInspectionCost * 100) / 100,
-    logistics_packaging_cost: Math.round(logisticsPackagingCost * 100) / 100,
-    total_ex_factory_cost: Math.round(totalExFactoryCost * 100) / 100,
+    prime_manufacturing_cost: round2(primeManufacturingCost),
+    factory_overhead_cost: round2(factoryOverheadCost),
+    quality_inspection_cost: round2(qualityInspectionCost),
+    logistics_packaging_cost: round2(logisticsPackagingCost),
+    total_ex_factory_cost: round2(totalExFactoryCost),
 
-    margin_pct: marginPct,
-    margin_amount: Math.round(marginAmount * 100) / 100,
-    unit_price_excl_gst: Math.round(unitPriceExclGst * 100) / 100,
-    gst_pct: gstPct,
-    gst_amount: Math.round(gstAmount * 100) / 100,
-    final_unit_price_incl_gst: Math.round(finalUnitPriceInclGst * 100) / 100,
+    margin_pct: round2(marginPct),
+    margin_amount: round2(marginAmount),
+    unit_price_excl_gst: round2(unitPriceExclGst),
+    gst_pct: round2(gstPct),
+    gst_amount: round2(gstAmount),
+    final_unit_price_incl_gst: round2(finalUnitPriceInclGst),
 
-    annual_contract_value_excl_gst: Math.round(annualContractValueExclGst * 100) / 100,
-    annual_contract_value_incl_gst: Math.round(annualContractValueInclGst * 100) / 100,
+    annual_contract_value_excl_gst: round2(annualContractValueExclGst),
+    annual_contract_value_incl_gst: round2(annualContractValueInclGst),
     requires_sales_head_approval: requiresSalesHeadApproval,
   };
 }
@@ -268,7 +329,13 @@ export function calculateMultiVolumeQuotes(
   rates: RateMasterDatabase,
   asOfDate?: string
 ): CostBreakdown[] {
-  return tiers.map((tier) =>
+  const safeTiers = Array.isArray(tiers) && tiers.length > 0 ? tiers : [
+    { volume: 30000, batch_size: 2500, label: 'Batch Low (30k/yr)' },
+    { volume: 60000, batch_size: 5000, label: 'Batch Mid (60k/yr)' },
+    { volume: 90000, batch_size: 10000, label: 'Full Commitment (90k/yr)' },
+  ];
+
+  return safeTiers.map((tier) =>
     calculatePartCost({ ...baseInputs, volume_tier: tier }, rates, asOfDate)
   );
 }

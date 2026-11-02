@@ -14,6 +14,13 @@ export async function POST(request: Request) {
       );
     }
 
+    if (rawText.length > 50000) {
+      return NextResponse.json(
+        { success: false, error: 'Intake text exceeds maximum allowable limit of 50,000 characters.' },
+        { status: 413 }
+      );
+    }
+
     // 1. Intelligent Entity Extraction with Confidence & Provenance
     const extracted = parseRFQText(rawText);
 
