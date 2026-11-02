@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import type { CostBreakdown, VolumeTier, RoutingStep } from './costing';
-import { calculatePartCost, calculateMultiVolumeQuotes } from './costing';
+import type { CostBreakdown, VolumeTier, RoutingStep } from './costing.ts';
+import { calculatePartCost, calculateMultiVolumeQuotes } from './costing.ts';
 
 export interface RFQRecord {
   id: string;

@@ -1,10 +1,15 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import { calculatePartCost } from '../lib/costing.ts';
 import { db } from '../lib/db.ts';
 
 console.log('============================================================');
 console.log('AutoQuote AI - Cybersecurity & Production Hardening Verifier');
 console.log('============================================================\n');
+
+const seedFile = path.join(process.cwd(), 'data/seed_rfqs.json');
+const originalSeedJson = fs.readFileSync(seedFile, 'utf8');
 
 const mockRates = db.getRateMasters();
 
@@ -131,6 +136,9 @@ console.log(`  - High Value Contract: ₹${(highValueQuote.annual_contract_value
 assert.equal(lowValueQuote.requires_sales_head_approval, false);
 assert.equal(highValueQuote.requires_sales_head_approval, true);
 console.log('✓ High-value governance threshold verified\n');
+
+// Restore original seed JSON to preserve clean state
+fs.writeFileSync(seedFile, originalSeedJson, 'utf8');
 
 console.log('============================================================');
 console.log('ALL 5 CYBERSECURITY & HARDENING VERIFICATION TESTS PASSED!');

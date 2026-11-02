@@ -153,7 +153,9 @@ export function Navbar() {
             {/* Current User Label */}
             <div className="text-right hidden sm:block border-l border-slate-800 pl-3">
               <div className="text-xs font-medium text-slate-200">{userName}</div>
-              <div className="text-[10px] text-slate-400 capitalize">{role.replace('_', ' ')} Mode</div>
+              <div className="text-[10px] text-slate-400">
+                {role === 'sales_head' ? 'Sales Head' : role === 'plant_head' ? 'Plant Head' : 'Estimator'} Mode
+              </div>
             </div>
 
           </div>

@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --experimental-strip-types scripts/test_costing_math.mjs"
+    "test": "node --experimental-strip-types scripts/test_costing_math.mjs && node --experimental-strip-types scripts/test_security_audit.mjs",
+    "test:math": "node --experimental-strip-types scripts/test_costing_math.mjs",
+    "test:sec": "node --experimental-strip-types scripts/test_security_audit.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
